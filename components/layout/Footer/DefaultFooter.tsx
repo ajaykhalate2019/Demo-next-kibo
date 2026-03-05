@@ -1,75 +1,128 @@
-import { Grid, Typography, Box, Link } from '@mui/material'
-
 const FooterItemLink = ({ link, text }: any) => {
   return (
-    <Typography className="mb-2">
-      <Link
+    <div>
+      <a
         href={link}
-        underline="none"
-        className="text-sm text-gray-600 hover:text-black transition-colors duration-200"
+        className="group relative text-sm text-white hover:text-teal-400 transition duration-300"
       >
         {text}
-      </Link>
-    </Typography>
+
+        {/* underline animation */}
+        <span className="absolute left-0 -bottom-1 w-0 h-[1px] bg-teal-400 transition-all duration-300 group-hover:w-full"></span>
+      </a>
+    </div>
   )
 }
 
 export default function DefaultFooter({ sections = [], social = [] }: any) {
   return (
-    <Box className="w-full bg-gray-100 mt-20">
-      <Box className="max-w-7xl mx-auto px-6 lg:px-12 py-16">
-        {/* Top Grid Section */}
-        <Grid container spacing={8} justifyContent="space-around">
-          {sections.map((section: any) => (
-            <Grid item xs={12} sm={6} md={3} key={section.title}>
-              <Typography className="text-sm font-semibold uppercase tracking-wide text-gray-900 mb-5">
-                {section.title}
-              </Typography>
+    <footer className="w-full mt-20 bg-[#1A1A1A] text-white">
 
-              {section.items.map((item: any) => (
-                <FooterItemLink key={item.text} {...item} />
-              ))}
-            </Grid>
-          ))}
-        </Grid>
+      <div className="max-w-7xl mx-auto px-6 lg:px-12 py-20">
 
-        {/* Divider */}
-        <div className="border-t border-gray-800 mt-14 pt-8" />
+        {/* TOP GRID */}
+        <div className="grid grid-cols-1 md:grid-cols-6 gap-10">
 
-        {/* Bottom Section */}
-        <Box className="flex flex-row items-center justify-around gap-6 text-sm text-gray-600">
-          {/* Left - Policies */}
-          <div className="flex flex-wrap justify-center md:justify-start gap-4">
-            <span className="hover:text-black cursor-pointer">Terms of Use</span>
-            <span className="hover:text-black cursor-pointer">Privacy Policy</span>
-            <span className="hover:text-black cursor-pointer">Accessibility</span>
-            <span className="hover:text-black cursor-pointer">Site Map</span>
+          {/* NEWSLETTER */}
+          <div className="md:col-span-2">
+            <h3 className="text-xl font-semibold mb-4 tracking-wide">
+              JOIN OUR NEWSLETTER
+            </h3>
+
+            <p className="text-gray-400 text-sm mb-8 max-w-sm leading-relaxed">
+              Subscribe to get special offers, free giveaways, and once-in-a-lifetime deals.
+            </p>
+
+            {/* INPUT */}
+            <div className="flex w-full max-w-md bg-[#1e293b] border border-gray-700 rounded-lg overflow-hidden shadow-md">
+
+              <input
+                type="email"
+                placeholder="Enter your email"
+                className="flex-1 bg-transparent px-4 py-3 text-sm text-white placeholder-gray-400 outline-none"
+              />
+
+              <button className="bg-teal-500 hover:bg-teal-600 px-6 text-sm font-medium transition">
+                Subscribe
+              </button>
+
+            </div>
+
+            <p className="text-xs text-gray-500 mt-4">
+              We respect your privacy. Unsubscribe anytime.
+            </p>
           </div>
 
-          {/* Center - Social Icons */}
+          {/* FOOTER SECTIONS */}
+          {sections.map((section: any) => (
+            <div key={section.title} className="col-span-1">
+              <h4 className="text-[#2ea195] uppercase tracking-widest text-xs font-semibold mb-6">
+                {section.title}
+              </h4>
+
+              <div className="space-y-3">
+                {section.items.map((item: any) => (
+                  <FooterItemLink key={item.text} {...item} />
+                ))}
+              </div>
+            </div>
+          ))}
+
+        </div>
+
+        {/* DIVIDER */}
+        <div className="border-t border-gray-600 mt-16 pt-8" />
+
+        {/* BOTTOM BAR */}
+        <div className="flex flex-col md:flex-row items-center justify-between gap-6 text-sm text-gray-400">
+
+          {/* LEFT LINKS */}
+          <div className="flex items-center gap-8 text-sm">
+
+            <span className="cursor-pointer hover:text-white transition">
+              Terms of Use
+            </span>
+
+            <span className="cursor-pointer hover:text-white transition">
+              Privacy Policy
+            </span>
+
+            <span className="cursor-pointer hover:text-white transition">
+              Accessibility
+            </span>
+
+            <span className="cursor-pointer hover:text-white transition">
+              Site Map
+            </span>
+
+          </div>
+
+          {/* SOCIAL ICONS */}
           <div className="flex items-center gap-5">
             {social.map((item: any, index: number) => (
-              <Link
+              <a
                 key={index}
                 href={item.link}
                 target="_blank"
-                className="transition-transform duration-300 hover:scale-110"
+                className="flex h-8 w-8 items-center justify-center rounded-full bg-black hover:bg-teal-500 transition"
               >
                 <img
                   src={item.iconPath}
-                  alt="social-icon"
-                  className="w-5 h-5 opacity-70 hover:opacity-100 transition"
+                  alt="social"
+                  className="h-3.5 w-3.5"
                 />
-              </Link>
+              </a>
             ))}
           </div>
 
-          {/* Right - Copyright */}
-          <Typography className="text-center md:text-right">
-            © {new Date().getFullYear()} Fashion Cloth
-          </Typography>
-        </Box>
-      </Box>
-    </Box>
+          {/* COPYRIGHT */}
+          <p className="text-sm text-gray-500">
+            © {new Date().getFullYear()} Fashion Cloth. All rights reserved.
+          </p>
+
+        </div>
+
+      </div>
+    </footer>
   )
 }
