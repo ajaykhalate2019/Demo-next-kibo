@@ -21,7 +21,6 @@ import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
 
 import { headerActionAreaStyles, kiboHeaderStyles, topHeaderStyles } from './KiboHeader.styles'
-import { KiboLogo } from '@/components/common'
 import { AccountHierarchyFormDialog } from '@/components/dialogs'
 import {
   AccountIcon,
@@ -94,7 +93,7 @@ const HeaderActionArea = (props: HeaderActionAreaProps) => {
           flexDirection: 'row',
           justifyContent: 'space-between',
           alignItems: 'center',
-          gap: 2,
+          gap: 1,
           pt: 1,
         }}
       >
@@ -105,7 +104,7 @@ const HeaderActionArea = (props: HeaderActionAreaProps) => {
           }}
         >
           <Link href="/">
-            <Image src={FC_Logos} alt="logo" height={90} width={160} />
+            <Image src={FC_Logos} alt="logo" height={70} width={124} />
           </Link>
         </Box>
         <Box sx={{ flex: 1 }} />

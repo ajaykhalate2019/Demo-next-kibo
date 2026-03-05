@@ -4,12 +4,14 @@ import SearchIcon from '@mui/icons-material/Search'
 import { Box, NoSsr } from '@mui/material'
 import { getCookie } from 'cookies-next'
 import Link from 'next/link'
+import Image from 'next/image'
 import { useTranslation } from 'next-i18next'
 
-import { HeaderAction, KiboLogo } from '@/components/common'
+import { HeaderAction } from '@/components/common'
 import { HamburgerIcon, StoreFinderIcon, CartIcon } from '@/components/layout'
 import { useHeaderContext } from '@/context'
 import { b2bUserActions, hasAnyPermission } from '@/lib/helpers'
+import FC_Logos from '@/public/icons/clothLogo.jpg'
 
 const MobileHeaderStyles = {
   container: {
@@ -48,7 +50,7 @@ const MobileHeader = ({ children }: { children?: React.ReactNode }) => {
 
           <Box position="relative">
             <Link href="/" passHref>
-              <KiboLogo small />
+              <Image src={FC_Logos} alt="logo" height={35} width={62} />
             </Link>
           </Box>
 

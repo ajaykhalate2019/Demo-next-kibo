@@ -7,7 +7,7 @@ export const topHeaderStyles = {
     backgroundColor: 'common.white',
     justifyContent: 'flex-end',
     zIndex: (theme: any) => theme.zIndex.modal,
-    paddingBlock: 1,
+    paddingBlock: 0.5,
     paddingInline: 2,
   },
   container: {
@@ -20,8 +20,8 @@ export const topHeaderStyles = {
 export const headerActionAreaStyles = {
   wrapper: {
     display: 'flex',
-    backgroundColor: '#f2f2f2',
-    paddingBlock: { xs: 0, md: 1 },
+    backgroundColor: '#f2f2f2ff',
+    paddingBlock: { xs: 0, md: 0.5 },
   },
   container: {
     display: 'flex',
@@ -52,7 +52,7 @@ export const kiboHeaderStyles = {
     zIndex: (theme: any) => theme.zIndex.modal,
     width: '100%',
     backgroundColor: 'common.white',
-    minHeight: '57px',
+    minHeight: '50px',
   },
   appBarStyles: {
     zIndex: (theme: any) => theme.zIndex.modal,
@@ -84,7 +84,7 @@ export const kiboHeaderStyles = {
     margin: 'auto',
     color: 'common.black',
     width: '100%',
-    minHeight: '50px',
+    minHeight: '40px',
     backgroundColor: 'common.white',
     display: {
       xs: 'none',

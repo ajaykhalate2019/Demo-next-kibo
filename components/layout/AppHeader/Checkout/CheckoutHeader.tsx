@@ -2,11 +2,12 @@ import React from 'react'
 
 import { Box, Container, Typography } from '@mui/material'
 import Link from 'next/link'
+import Image from 'next/image'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
 
-import { KiboLogo } from '@/components/common'
 import { useGetCurrentOrder, useGetCurrentCheckout } from '@/hooks'
+import FC_Logos from '@/public/icons/clothLogo.jpg'
 
 const checkoutHeaderStyles = {
   container: {
@@ -39,7 +40,7 @@ const CheckoutHeader = ({ isMultiShipEnabled }: { isMultiShipEnabled: boolean })
       <Container maxWidth="xl" sx={checkoutHeaderStyles.container} data-testid="checkout-header">
         <Box position="relative">
           <Link href="/" passHref>
-            <KiboLogo small />
+            <Image src={FC_Logos} alt="logo" height={35} width={62} />
           </Link>
         </Box>
 

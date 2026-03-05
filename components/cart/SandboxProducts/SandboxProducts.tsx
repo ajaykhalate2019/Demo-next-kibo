@@ -26,6 +26,8 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import ShoppingBagIcon from '@mui/icons-material/ShoppingBag'
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew'
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos'
+import Favorite from '@mui/icons-material/Favorite'
+import FavoriteBorder from '@mui/icons-material/FavoriteBorder'
 import { LoadingButton } from '@mui/lab'
 
 import { productGetters } from '@/lib/getters'
@@ -47,7 +49,8 @@ const SandboxProducts = () => {
   })
 
   const { getProductLink } = uiHelpers()
-  const { handleAddToCart, isATCLoading } = useProductCardActions()
+  const { handleAddToCart, isATCLoading, checkProductInWishlist, handleWishList } =
+    useProductCardActions()
 
   const scroll = (direction: 'left' | 'right') => {
     if (!scrollRef.current) return
@@ -206,11 +209,11 @@ const SandboxProducts = () => {
                       flex: 1,
                       display: 'flex',
                       flexDirection: 'column',
-                      borderRadius: 3,
+                      borderRadius: 2,
                       transition: '0.3s',
                       '&:hover': {
-                        boxShadow: 6,
-                        transform: 'translateY(-6px)',
+                        boxShadow: 4,
+                        transform: 'translateY(-3px)',
                       },
                     }}
                   >
@@ -226,7 +229,7 @@ const SandboxProducts = () => {
                           width: '100%',
                           height: '100%',
                           objectFit: 'contain',
-                          p: 1,
+                          p: 0.5,
                         }}
                       />
                       {isOnSale && (
@@ -236,6 +239,27 @@ const SandboxProducts = () => {
                           size="small"
                           sx={{ position: 'absolute', top: 12, left: 12 }}
                         />
+                      )}
+                      {!productGetters.isVariationProduct(typedProduct) && (
+                        <IconButton
+                          sx={{
+                            position: 'absolute',
+                            top: 8,
+                            right: 8,
+                            bgcolor: 'rgba(255, 255, 255, 0.7)',
+                            '&:hover': { bgcolor: 'rgba(255, 255, 255, 0.9)' },
+                          }}
+                          onClick={() => handleWishList(typedProduct as any)}
+                        >
+                          {checkProductInWishlist({
+                            productCode,
+                            variationProductCode,
+                          }) ? (
+                            <Favorite color="error" fontSize="small" />
+                          ) : (
+                            <FavoriteBorder fontSize="small" />
+                          )}
+                        </IconButton>
                       )}
                     </Box>
 
@@ -332,4 +356,3 @@ const SandboxProducts = () => {
 }
 
 export default SandboxProducts
-
