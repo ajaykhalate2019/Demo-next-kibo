@@ -87,7 +87,7 @@ const SandboxProducts = () => {
   return (
     <Container maxWidth="xl" sx={{ py: 6 }}>
       {/* HEADER */}
-      <Box display="flex" justifyContent="space-between" mb={8}>
+      <Box display="flex" justifyContent="space-between" mb={6}>
         <Box>
           <Typography variant="h4" color="primary.main" fontWeight={700}>
             All Products
@@ -102,7 +102,7 @@ const SandboxProducts = () => {
       {/* CAROUSEL */}
       <Box position="relative">
         {/* LEFT ARROW (Hidden on Mobile) */}
-        {!isMobile && (
+        {/* {!isMobile && (
           <IconButton
             onClick={() => scroll('left')}
             sx={{
@@ -118,10 +118,10 @@ const SandboxProducts = () => {
           >
             <ArrowBackIosNewIcon fontSize="small" />
           </IconButton>
-        )}
+        )} */}
 
         {/* RIGHT ARROW (Hidden on Mobile) */}
-        {!isMobile && (
+        {/* {!isMobile && (
           <IconButton
             onClick={() => scroll('right')}
             sx={{
@@ -137,6 +137,39 @@ const SandboxProducts = () => {
           >
             <ArrowForwardIosIcon fontSize="small" />
           </IconButton>
+        )} */}
+
+        {/* TOP CONTROLS */}
+        {!isMobile && (
+          <Box
+            display="flex"
+            justifyContent="flex-end"
+            alignItems="center"
+            gap={1}
+            mb={2}
+          >
+            <IconButton
+              onClick={() => scroll('left')}
+              sx={{
+                bgcolor: '#fff',
+                boxShadow: 2,
+                '&:hover': { bgcolor: '#f5f5f5' },
+              }}
+            >
+              <ArrowBackIosNewIcon fontSize="small" />
+            </IconButton>
+
+            <IconButton
+              onClick={() => scroll('right')}
+              sx={{
+                bgcolor: '#fff',
+                boxShadow: 2,
+                '&:hover': { bgcolor: '#f5f5f5' },
+              }}
+            >
+              <ArrowForwardIosIcon fontSize="small" />
+            </IconButton>
+          </Box>
         )}
 
         {/* SCROLL CONTAINER */}
@@ -146,10 +179,23 @@ const SandboxProducts = () => {
             display: 'flex',
             overflowX: 'auto',
             scrollBehavior: 'smooth',
-            gap: 3,
+            gap: 2,
             pb: 2,
-            scrollbarWidth: 'none',
-            //+'&::-webkit-scrollbar': { display: 'none' },
+            // scrollbarWidth: 'thin',
+            '&::-webkit-scrollbar': { height: 8, },
+            '&::-webkit-scrollbar-track': {
+              background: '#f1f1f1',
+              borderRadius: 10,
+            },
+
+            '&::-webkit-scrollbar-thumb': {
+              background: '#72c2baff',
+              borderRadius: 10,
+            },
+
+            '&::-webkit-scrollbar-thumb:hover': {
+              background: '#2ea095',
+            },
           }}
         >
           {products.map((product, index) => {
@@ -199,7 +245,7 @@ const SandboxProducts = () => {
                 key={index}
                 sx={{
                   flex: '0 0 auto',
-                  width: isMobile ? '100%' : isTablet ? '50%' : '25%',
+                  width: isMobile ? '96%' : isTablet ? '48%' : '25%',
                   display: 'flex',
                 }}
               >
@@ -209,16 +255,16 @@ const SandboxProducts = () => {
                       flex: 1,
                       display: 'flex',
                       flexDirection: 'column',
-                      borderRadius: 2,
+                      borderRadius: 1.5,
                       transition: '0.3s',
                       '&:hover': {
                         boxShadow: 4,
-                        transform: 'translateY(-3px)',
+                        transform: 'translateY(-2px)',
                       },
                     }}
                   >
                     {/* IMAGE */}
-                    <Box sx={{ position: 'relative', pt: '55%' }}>
+                    <Box sx={{ position: 'relative', pt: '50%' }}>
                       <CardMedia
                         component="img"
                         image={imageUrl}
@@ -264,14 +310,14 @@ const SandboxProducts = () => {
                     </Box>
 
                     {/* CONTENT */}
-                    <CardContent sx={{ flexGrow: 1 }}>
-                      <Typography fontWeight={600} gutterBottom>
+                    <CardContent sx={{ flexGrow: 1, p: 1.5 }}>
+                      <Typography variant="body1" fontWeight={600} gutterBottom>
                         {name}
                       </Typography>
 
                       {/* DESCRIPTION */}
                       <Typography
-                        variant="body2"
+                        variant="caption"
                         color="text.secondary"
                         sx={{
                           mt: 1,
@@ -286,7 +332,7 @@ const SandboxProducts = () => {
 
                       {/* PRICE SECTION */}
                       <Box display="flex" alignItems="center" gap={1}>
-                        <Typography variant="h6" fontWeight={700} color="primary">
+                        <Typography variant="subtitle1" fontWeight={700} color="primary">
                           ${isOnSale ? price.special : price.regular}
                         </Typography>
 
@@ -311,7 +357,7 @@ const SandboxProducts = () => {
                     </CardContent>
 
                     {/* ACTIONS */}
-                    <Box p={2}>
+                    <Box p={1.5}>
                       <Stack direction="row" spacing={1}>
                         <Button
                           fullWidth
