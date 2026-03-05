@@ -24,26 +24,34 @@ import { useDebounce, useGetSearchSuggestion2 } from '@/hooks'
 
 const style = {
   paper: {
-    borderRadius: 0,
+    borderRadius: 1,
     position: 'relative',
     zIndex: 1400,
     width: '100%',
     maxWidth: { xs: '100%', md: 661 },
+    bgcolor: '#1A1A1A',
   } as SxProps<Theme> | undefined,
   list: {
-    p: 2,
+    p: 1.5,
   },
   listItem: {
+    borderRadius: 1,
+    mb: 0.5,
+    transition: 'all 0.2s',
+    // '&:hover': {
+    //   backgroundColor: 'rgba(255, 255, 255, 0.05)',
+    //   pl: 2.5,
+    // },
     '&:focus': {
-      backgroundColor: 'transparent',
-    },
-    '&:hover': {
-      backgroundColor: 'transparent',
+      backgroundColor: 'rgba(255, 255, 255, 0.1)',
     },
   },
   listItemText: {
-    fontSize: (theme: Theme) => theme.typography.body2,
     margin: 0,
+    '& .MuiListItemText-primary': {
+      fontSize: '0.875rem',
+      color: 'grey.400',
+    },
   } as SxProps<Theme> | undefined,
 }
 
@@ -63,8 +71,16 @@ const Title = ({ heading }: { heading: string }) => {
   const { t } = useTranslation('common')
 
   return (
-    <ListItem key="Suggestions" sx={{ ...style.listItem }}>
-      <Typography fontWeight={600} variant="subtitle1">
+    <ListItem key="Suggestions" sx={{ px: 2, py: 1 }}>
+      <Typography
+        fontWeight={700}
+        variant="caption"
+        sx={{
+          textTransform: 'uppercase',
+          color: 'primary.main',
+          letterSpacing: 1.2
+        }}
+      >
         {t(heading)}
       </Typography>
     </ListItem>
@@ -131,7 +147,34 @@ const SearchSuggestions = (props: SearchSuggestionsProps) => {
 
   return (
     <Stack width="100%" position="relative" gap={1} sx={{ maxWidth: '100%' }}>
-      <Box sx={{ zIndex: 1400 }}>
+      <Box sx={{
+        zIndex: 1400,
+        '& .MuiPaper-root': {
+          bgcolor: 'grey.900',
+          borderRadius: 2,
+          border: '1px solid',
+          borderColor: 'grey.800',
+          transition: 'all 0.3s',
+          '&:hover': {
+            borderColor: 'grey.700',
+          },
+          '&:focus-within': {
+            borderColor: 'primary.main',
+            boxShadow: '0 0 0 2px rgba(109, 217, 204, 0.2)',
+          }
+        },
+        '& .MuiInputBase-input': {
+          color: 'common.white',
+          fontSize: '0.9rem',
+          '&::placeholder': {
+            color: 'grey.600',
+            opacity: 1,
+          }
+        },
+        '& .MuiIconButton-root': {
+          color: 'grey.500',
+        }
+      }}>
         <SearchBar
           searchTerm={searchTerm}
           onSearch={handleSearch}
@@ -159,7 +202,7 @@ const SearchSuggestions = (props: SearchSuggestionsProps) => {
               />
             ))}
           </List>
-          <Divider />
+          <Divider sx={{ borderColor: 'rgba(255,255,255,0.05)' }} />
           <List sx={{ ...style.list }} role="group">
             <Title heading="categories" />
             {categorySuggestionGroup?.suggestions?.map((category) => (
