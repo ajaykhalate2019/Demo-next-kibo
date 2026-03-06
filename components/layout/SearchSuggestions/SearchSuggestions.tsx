@@ -24,35 +24,20 @@ import { useDebounce, useGetSearchSuggestion2 } from '@/hooks'
 
 const style = {
   paper: {
-    borderRadius: 1,
+    borderRadius: '1.5rem',
     position: 'relative',
     zIndex: 1400,
     width: '100%',
     maxWidth: { xs: '100%', md: 661 },
-    bgcolor: '#1A1A1A',
+    background: 'rgba(184, 231, 233, 0.95)',
+    backdropFilter: 'blur(24px)',
+    border: '1px solid rgba(255, 255, 255, 0.1)',
+    boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.5)',
+    overflow: 'hidden',
   } as SxProps<Theme> | undefined,
   list: {
-    p: 1.5,
+    p: 2,
   },
-  listItem: {
-    borderRadius: 1,
-    mb: 0.5,
-    transition: 'all 0.2s',
-    // '&:hover': {
-    //   backgroundColor: 'rgba(255, 255, 255, 0.05)',
-    //   pl: 2.5,
-    // },
-    '&:focus': {
-      backgroundColor: 'rgba(255, 255, 255, 0.1)',
-    },
-  },
-  listItemText: {
-    margin: 0,
-    '& .MuiListItemText-primary': {
-      fontSize: '0.875rem',
-      color: 'grey.400',
-    },
-  } as SxProps<Theme> | undefined,
 }
 
 interface SearchSuggestionsProps {
@@ -71,19 +56,11 @@ const Title = ({ heading }: { heading: string }) => {
   const { t } = useTranslation('common')
 
   return (
-    <ListItem key="Suggestions" sx={{ px: 2, py: 1 }}>
-      <Typography
-        fontWeight={700}
-        variant="caption"
-        sx={{
-          textTransform: 'uppercase',
-          color: 'primary.main',
-          letterSpacing: 1.2
-        }}
-      >
+    <div className="px-5 py-3 first:pt-4">
+      <h5 className="text-[10px] font-black uppercase tracking-[0.25em] bg-gradient-to-r from-cyan-400 to-teal-400 bg-clip-text text-transparent">
         {t(heading)}
-      </Typography>
-    </ListItem>
+      </h5>
+    </div>
   )
 }
 
@@ -92,9 +69,21 @@ const Content = (props: ListItemProps) => {
 
   return (
     <Link href={`${path}${code}`} passHref>
-      <ListItem button key={code} onClick={onSearchSuggestionClose}>
-        <ListItemText primary={name} sx={{ ...style.listItemText }} />
-      </ListItem>
+      <div
+        role="button"
+        onClick={onSearchSuggestionClose}
+        className="group relative flex items-center px-5 py-3 mx-2 my-1 rounded-xl transition-all duration-300 hover:bg-white/5 active:scale-[0.98] cursor-pointer overflow-hidden"
+      >
+        <div className="absolute left-0 w-1 h-0 bg-gradient-to-b from-cyan-400 to-teal-400 transition-all duration-300 group-hover:h-6" />
+        <div className="flex-1">
+          <p className="text-sm text-gray-200 group-hover:text-cyan-400 group-hover:pl-2 transition-all duration-300 font-medium">
+            {name}
+          </p>
+        </div>
+        <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 text-cyan-400 translate-x-2 group-hover:translate-x-0">
+          <span className="text-xs">→</span>
+        </div>
+      </div>
     </Link>
   )
 }
@@ -147,34 +136,7 @@ const SearchSuggestions = (props: SearchSuggestionsProps) => {
 
   return (
     <Stack width="100%" position="relative" gap={1} sx={{ maxWidth: '100%' }}>
-      <Box sx={{
-        zIndex: 1400,
-        '& .MuiPaper-root': {
-          bgcolor: 'grey.900',
-          borderRadius: 2,
-          border: '1px solid',
-          borderColor: 'grey.800',
-          transition: 'all 0.3s',
-          '&:hover': {
-            borderColor: 'grey.700',
-          },
-          '&:focus-within': {
-            borderColor: 'primary.main',
-            boxShadow: '0 0 0 2px rgba(109, 217, 204, 0.2)',
-          }
-        },
-        '& .MuiInputBase-input': {
-          color: 'common.white',
-          fontSize: '0.9rem',
-          '&::placeholder': {
-            color: 'grey.600',
-            opacity: 1,
-          }
-        },
-        '& .MuiIconButton-root': {
-          color: 'grey.500',
-        }
-      }}>
+      <Box sx={{ zIndex: 1400 }}>
         <SearchBar
           searchTerm={searchTerm}
           onSearch={handleSearch}
@@ -184,37 +146,46 @@ const SearchSuggestions = (props: SearchSuggestionsProps) => {
       </Box>
       <Collapse
         in={isOpen}
-        timeout="auto"
+        timeout={400}
         unmountOnExit
         role="contentinfo"
-        sx={{ position: 'absolute', top: '50px', width: '100%' }}
+        sx={{
+          position: 'absolute',
+          top: '60px',
+          width: '100%',
+          zIndex: 1400
+        }}
       >
-        <Paper sx={{ ...style.paper }}>
-          <List sx={{ ...style.list }} role="group">
+        <Paper sx={{ ...style.paper }} className="animate-in fade-in slide-in-from-top-4 duration-500">
+          <div className="max-h-[60vh] overflow-y-auto no-scrollbar py-2">
             <Title heading="suggestions" />
-            {productSuggestionGroup?.suggestions?.map((product) => (
-              <Content
-                key={product?.suggestion?.productCode}
-                code={product?.suggestion?.productCode}
-                name={product?.suggestion?.productName}
-                path={'/product/'}
-                onSearchSuggestionClose={handleClose}
-              />
-            ))}
-          </List>
-          <Divider sx={{ borderColor: 'rgba(255,255,255,0.05)' }} />
-          <List sx={{ ...style.list }} role="group">
+            <div className="mb-4">
+              {productSuggestionGroup?.suggestions?.map((product) => (
+                <Content
+                  key={product?.suggestion?.productCode}
+                  code={product?.suggestion?.productCode}
+                  name={product?.suggestion?.productName}
+                  path={'/product/'}
+                  onSearchSuggestionClose={handleClose}
+                />
+              ))}
+            </div>
+
+            <div className="h-[1px] mx-6 bg-white/5" />
+
             <Title heading="categories" />
-            {categorySuggestionGroup?.suggestions?.map((category) => (
-              <Content
-                key={category?.suggestion?.categoryCategoryCode}
-                code={category?.suggestion?.categoryCategoryCode}
-                name={category?.suggestion?.categoryName}
-                path={'/category/'}
-                onSearchSuggestionClose={handleClose}
-              />
-            ))}
-          </List>
+            <div className="mb-2">
+              {categorySuggestionGroup?.suggestions?.map((category) => (
+                <Content
+                  key={category?.suggestion?.categoryCategoryCode}
+                  code={category?.suggestion?.categoryCategoryCode}
+                  name={category?.suggestion?.categoryName}
+                  path={'/category/'}
+                  onSearchSuggestionClose={handleClose}
+                />
+              ))}
+            </div>
+          </div>
         </Paper>
       </Collapse>
       <Backdrop open={isOpen} onClick={handleClose} data-testid="backdrop"></Backdrop>

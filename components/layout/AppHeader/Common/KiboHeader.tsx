@@ -85,20 +85,22 @@ const HeaderActionArea = (props: HeaderActionAreaProps) => {
   const showSearchBarInLargeHeader = !isHeaderSmall || isSearchBarVisible
 
   return (
-    <div className="bg-gradient-to-r from-[#6dd5ed] to-[#2193b0] py-2 md:py-3 shadow-lg" data-testid="header-action-area">
+    <div className="relative bg-gradient-to-r from-[#6dd5ed] via-[#2ea195] to-[#2193b0] backdrop-blur-md py-2 sm:py-3 md:py-4 shadow-xl" data-testid="header-action-area">
+      <div className="absolute inset-0 opacity-20 bg-[radial-gradient(circle_at_20%_50%,white,transparent_40%)] animate-pulse"></div>
       <Container maxWidth="xl">
-        <div className="flex flex-row items-center justify-between gap-4 md:gap-8">
+        <div className="relative flex items-center justify-between gap-3 sm:gap-4 md:gap-8">
           {/* Logo Section */}
-          <div className="flex-shrink-0">
-            <Link href="/" className="transition-transform hover:scale-105 duration-300">
-              <Image src={FC_Logos} alt="kibo-logo" height={50} width={100} className="object-contain" />
+          <div className="flex-shrink-0 group">
+            <Link href="/" className="flex items-center transition-all duration-300 transform hover:scale-110">
+              <Image src={FC_Logos} alt="kibo-logo" height={50} width={100} className="object-contain drop-shadow-md" />
             </Link>
           </div>
 
           {/* Search Bar Section - Centered */}
           {showSearchBarInLargeHeader && (
-            <div className="hidden md:flex flex-grow max-w-2xl px-4 animate-fadeIn" data-testid="Search-container">
-              <div className="w-full bg-white/20 backdrop-blur-md rounded-full border border-white/30 transition-all hover:bg-white/30">
+            <div className="hidden md:flex flex-grow max-w-2xl px-2 lg:px-4 transition-all duration-500" data-testid="Search-container">
+              <div className="w-full bg-white/20 backdrop-blur-lg rounded-full border border-white/30 transition-all duration-300 
+                               hover:bg-white/30 focus-within:bg-white/40 shadow-md hover:shadow-xl">
                 <SearchSuggestions
                   isViewSearchPortal={isMobileSearchPortalVisible}
                   onEnterSearch={() => toggleSearchBar(false)}
@@ -113,13 +115,15 @@ const HeaderActionArea = (props: HeaderActionAreaProps) => {
               <div className="flex items-center gap-3 md:gap-5">
                 {!isCSR && (
                   <>
-                    <div className="hover:text-white transition-colors cursor-pointer">
+                    {/* Store Icon */}
+                    <div className="cursor-pointer hover:text-white transition-all duration-300 hover:scale-110 hover:drop-shadow-lg">
                       <StoreFinderIcon
                         size={isHeaderSmall ? 'small' : 'medium'}
                         data-testid="Store-FinderIcon"
                       />
                     </div>
-                    <div className="hover:text-white transition-colors cursor-pointer">
+                    {/* Account Request */}
+                    <div className="hover:text-white transition-all duration-300 hover:text-white hover:scale-110 hover:drop-shadow-lg cursor-pointer">
                       <AccountRequestIcon
                         onClick={onAccountRequestClick}
                         isElementVisible={false}
@@ -130,7 +134,8 @@ const HeaderActionArea = (props: HeaderActionAreaProps) => {
                     </div>
                   </>
                 )}
-                <div className="inline-flex items-center hover:text-white transition-colors cursor-pointer">
+                {/* Account */}
+                <div className="inline-flex items-center hover:text-white transition-all cursor-pointer duration-300 hover:scale-110 hover:drop-shadow-lg">
                   <AccountIcon
                     size={isHeaderSmall ? 'small' : 'medium'}
                     onAccountIconClick={onAccountIconClick}
@@ -146,7 +151,7 @@ const HeaderActionArea = (props: HeaderActionAreaProps) => {
                       aria-controls={openAccountOptions ? 'account-menu' : undefined}
                       aria-haspopup="true"
                       aria-expanded={openAccountOptions ? 'true' : undefined}
-                      className="ml-1 text-gray-900 group-hover:text-white"
+                      className="ml-1 text-gray-900 transition-transform duration-300 hover:rotate-180"
                     />
                   )}
                   <SwitchAccountMenu
@@ -156,9 +161,12 @@ const HeaderActionArea = (props: HeaderActionAreaProps) => {
                   />
                 </div>
 
+                {/* Cart */}
                 {hasAnyPermission(b2bUserActions.MANAGE_CART) && (
-                  <div className="hover:text-white transition-colors cursor-pointer relative">
+                  <div className="relative hover:text-white transition-all cursor-pointer duration-300 hover:scale-110 hover:drop-shadow-lg">
                     <CartIcon size={isHeaderSmall ? 'small' : 'medium'} />
+                    {/* cart glow */}
+                    <span className="absolute -top-1 -right-1 h-2 w-2 bg-red-500 rounded-full animate-ping"></span>
                   </div>
                 )}
               </div>
@@ -172,7 +180,15 @@ const HeaderActionArea = (props: HeaderActionAreaProps) => {
 
 const StyledLink = styled(Link)(({ theme }: { theme: Theme }) => ({
   color: theme?.palette.common.black,
-  fontSize: theme?.typography.body1.fontSize,
+  fontSize: theme?.typography.body2.fontSize,
+  textDecoration: 'none',
+  transition: 'all 0.3s ease-in-out',
+  opacity: 0.9,
+  '&:hover': {
+    opacity: 1,
+    textShadow: '0 0 8px rgba(255, 255, 255, 0.4)',
+    transform: 'translateY(-1px)',
+  },
 }))
 
 const TopHeader = ({ navLinks }: { navLinks: NavigationLink[] }) => {

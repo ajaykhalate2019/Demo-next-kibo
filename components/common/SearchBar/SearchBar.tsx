@@ -52,7 +52,20 @@ const SearchBar = (props: SearchProps) => {
     onSearch('')
   }
   return (
-    <Paper component="form" variant="outlined" sx={{ ...style.paper }}>
+    <div
+      className={`
+        group relative flex items-center w-full transition-all duration-500 ease-out
+        bg-white/10 backdrop-blur-xl border border-white/20 rounded-full
+        hover:bg-white/20 hover:shadow-2xl hover:shadow-cyan-500/20
+        focus-within:bg-white/30 focus-within:ring-2 focus-within:ring-cyan-400/50 focus-within:scale-[1.01]
+      `}
+    >
+      <div className="flex items-center pl-3 text-white/70 group-hover:text-cyan-300 transition-colors duration-300">
+        <IconButton size="small" aria-label={SearchAriaLabel} className="p-1 hover:bg-transparent">
+          <Search fontSize="small" className="text-inherit" />
+        </IconButton>
+      </div>
+
       <InputBase
         name="searchInput"
         inputRef={childInputRef}
@@ -66,31 +79,33 @@ const SearchBar = (props: SearchProps) => {
           }
         }}
         size="small"
-        sx={{ ...style.inputBase }}
-        inputProps={{ 'aria-label': searchInputAriaLabel }}
+        className="flex-1 text-white placeholder:text-white/50 px-2 py-1.5 focus:outline-none"
+        inputProps={{
+          'aria-label': searchInputAriaLabel,
+          style: { padding: '8px 4px' } // MUI InputBase needs some internal padding management
+        }}
         {...inputProps}
         autoComplete="off"
-        startAdornment={
-          <IconButton size="small" aria-label={SearchAriaLabel}>
-            <Search fontSize="small" />
-          </IconButton>
-        }
-        {...(showClearButton && {
-          endAdornment: (
-            <IconButton
-              name="clearButton"
-              size="small"
-              onClick={handleClear}
-              disabled={searchTerm.length === 0}
-              aria-label={clearSearchAriaLabel}
-            >
-              <Clear fontSize="medium" />
-            </IconButton>
-          ),
-        })}
         {...rest}
       />
-    </Paper>
+
+      {showClearButton && searchTerm.length > 0 && (
+        <div className="flex items-center pr-2 animate-fadeIn">
+          <IconButton
+            name="clearButton"
+            size="small"
+            onClick={handleClear}
+            aria-label={clearSearchAriaLabel}
+            className="text-white/60 hover:text-white hover:bg-white/10 transition-all duration-300 transform hover:rotate-90"
+          >
+            <Clear fontSize="small" />
+          </IconButton>
+        </div>
+      )}
+
+      {/* Advanced Gradient Border Effect on Focus */}
+      <div className="absolute inset-0 rounded-full bg-gradient-to-r from-transparent via-cyan-400/20 to-transparent opacity-0 group-focus-within:opacity-100 blur transition-opacity duration-700 pointer-events-none"></div>
+    </div>
   )
 }
 export default SearchBar
