@@ -4,47 +4,17 @@ export const topHeaderStyles = {
       xs: 'none',
       md: 'flex',
     },
-    backgroundColor: '#1A1A1A',
+    backgroundColor: '#f3f3f3ff',
     justifyContent: 'flex-end',
     zIndex: (theme: any) => theme.zIndex.modal,
     paddingBlock: 0.5,
     paddingInline: 4,
-    borderBottom: '1px solid #222222',
+   // borderBottom: '1px solid #222222',
   },
   container: {
     display: 'flex',
     justifyContent: 'flex-end',
     alignItems: 'center',
-  },
-}
-
-export const headerActionAreaStyles = {
-  wrapper: {
-    display: 'flex',
-    backgroundColor: '#6dd9ccff',
-    paddingBlock: { xs: 0, md: 0.5 },
-  },
-  container: {
-    display: 'flex',
-    justifyContent: 'end',
-    alignItems: 'center',
-  },
-  searchSuggestionsWrapper: {
-    maxWidth: '100%',
-    flex: 'unset',
-    display: { xs: 'none', md: 'flex' },
-    alignItems: 'center',
-    // height: '100%',
-  },
-  rightColumn: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'flex-end',
-    gap: 1,
-  },
-  logoWrapper: {
-    order: 0,
-    // top: '-27px',
   },
 }
 

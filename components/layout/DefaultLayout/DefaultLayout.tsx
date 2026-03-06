@@ -79,7 +79,7 @@ const DefaultLayout = ({ pageProps, children }: { pageProps: any; children: Reac
                   {children}
                 </Container>
                 <DefaultFooter {...footerConfig} />
-                <Footer {...footerConfig} />
+                {/* <Footer {...footerConfig} /> */}
 
                 {router?.isPreview && <Preview />}
               </Stack>

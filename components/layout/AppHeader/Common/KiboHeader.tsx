@@ -20,7 +20,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
 
-import { headerActionAreaStyles, kiboHeaderStyles, topHeaderStyles } from './KiboHeader.styles'
+import { kiboHeaderStyles, topHeaderStyles } from './KiboHeader.styles'
 import { AccountHierarchyFormDialog } from '@/components/dialogs'
 import {
   AccountIcon,
@@ -83,97 +83,90 @@ const HeaderActionArea = (props: HeaderActionAreaProps) => {
   }
 
   const showSearchBarInLargeHeader = !isHeaderSmall || isSearchBarVisible
+
   return (
-    <Box sx={{ ...headerActionAreaStyles.wrapper }} data-testid="header-action-area">
-      <Container
-        maxWidth="xl"
-        sx={{
-          ...topHeaderStyles.container,
-          display: 'flex',
-          flexDirection: 'row',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          gap: 1,
-          pt: 1,
-        }}
-      >
-        <Box
-          component={'section'}
-          sx={{
-            ...kiboHeaderStyles.logoStyles,
-          }}
-        >
-          <Link href="/">
-            <Image src={FC_Logos} alt="logo" height={70} width={124} />
-          </Link>
-        </Box>
-        <Box sx={{ flex: 1 }} />
+    <div className="bg-gradient-to-r from-[#6dd5ed] to-[#2193b0] py-2 md:py-3 shadow-lg" data-testid="header-action-area">
+      <Container maxWidth="xl">
+        <div className="flex flex-row items-center justify-between gap-4 md:gap-8">
+          {/* Logo Section */}
+          <div className="flex-shrink-0">
+            <Link href="/" className="transition-transform hover:scale-105 duration-300">
+              <Image src={FC_Logos} alt="kibo-logo" height={50} width={100} className="object-contain" />
+            </Link>
+          </div>
 
-        <Box sx={headerActionAreaStyles.rightColumn}>
-          <NoSsr>
-            <Box display="flex" alignItems="center" gap={1} flex="0 0 auto">
-              {!isCSR && (
-                <>
-                  <StoreFinderIcon
-                    size={isHeaderSmall ? 'small' : 'medium'}
-                    data-testid="Store-FinderIcon"
-                  />
-                  <AccountRequestIcon
-                    onClick={onAccountRequestClick}
-                    isElementVisible={false}
-                    iconProps={{ fontSize: isHeaderSmall ? 'small' : 'medium' }}
-                    buttonText={t('b2b-account-request')}
-                    data-testid="Account-Request-Icon"
-                  />
-                </>
-              )}
-              <Box display={'flex'} justifyContent={'center'} alignItems={'center'}>
-                <AccountIcon
-                  size={isHeaderSmall ? 'small' : 'medium'}
-                  onAccountIconClick={onAccountIconClick}
-                  data-testid="Account-Icon"
-                  isElementVisible={true}
-                  isCSR={Boolean(isCSR)}
-                  customerName={customerName}
-                  companyOrOrganization={user?.companyOrOrganization as string}
-                />
-                {selectedAccountId && accountsByUser && accountsByUser?.length > 1 && (
-                  <KeyboardArrowDownOutlined
-                    onClick={handleAccountOptionsClick}
-                    aria-controls={openAccountOptions ? 'account-menu' : undefined}
-                    aria-haspopup="true"
-                    aria-expanded={openAccountOptions ? 'true' : undefined}
-                    sx={{
-                      color: 'grey.900',
-                    }}
-                  />
-                )}
-                <SwitchAccountMenu
-                  open={openAccountOptions}
-                  handleClose={handleClose}
-                  anchorEl={anchorElAccountOptions}
-                />
-              </Box>
-
-              {hasAnyPermission(b2bUserActions.MANAGE_CART) && (
-                <CartIcon size={isHeaderSmall ? 'small' : 'medium'} />
-              )}
-            </Box>
-          </NoSsr>
+          {/* Search Bar Section - Centered */}
           {showSearchBarInLargeHeader && (
-            <Box
-              sx={{ ...headerActionAreaStyles.searchSuggestionsWrapper }}
-              data-testid="Search-container"
-            >
-              <SearchSuggestions
-                isViewSearchPortal={isMobileSearchPortalVisible}
-                onEnterSearch={() => toggleSearchBar(false)}
-              />
-            </Box>
+            <div className="hidden md:flex flex-grow max-w-2xl px-4 animate-fadeIn" data-testid="Search-container">
+              <div className="w-full bg-white/20 backdrop-blur-md rounded-full border border-white/30 transition-all hover:bg-white/30">
+                <SearchSuggestions
+                  isViewSearchPortal={isMobileSearchPortalVisible}
+                  onEnterSearch={() => toggleSearchBar(false)}
+                />
+              </div>
+            </div>
           )}
-        </Box>
+
+          {/* Icons/Actions Section */}
+          <div className="flex flex-shrink-0 items-center gap-3 md:gap-5 text-gray-900">
+            <NoSsr>
+              <div className="flex items-center gap-3 md:gap-5">
+                {!isCSR && (
+                  <>
+                    <div className="hover:text-white transition-colors cursor-pointer">
+                      <StoreFinderIcon
+                        size={isHeaderSmall ? 'small' : 'medium'}
+                        data-testid="Store-FinderIcon"
+                      />
+                    </div>
+                    <div className="hover:text-white transition-colors cursor-pointer">
+                      <AccountRequestIcon
+                        onClick={onAccountRequestClick}
+                        isElementVisible={false}
+                        iconProps={{ fontSize: isHeaderSmall ? 'small' : 'medium' }}
+                        buttonText={t('b2b-account-request')}
+                        data-testid="Account-Request-Icon"
+                      />
+                    </div>
+                  </>
+                )}
+                <div className="inline-flex items-center hover:text-white transition-colors cursor-pointer">
+                  <AccountIcon
+                    size={isHeaderSmall ? 'small' : 'medium'}
+                    onAccountIconClick={onAccountIconClick}
+                    data-testid="Account-Icon"
+                    isElementVisible={true}
+                    isCSR={Boolean(isCSR)}
+                    customerName={customerName}
+                    companyOrOrganization={user?.companyOrOrganization as string}
+                  />
+                  {selectedAccountId && accountsByUser && accountsByUser?.length > 1 && (
+                    <KeyboardArrowDownOutlined
+                      onClick={handleAccountOptionsClick}
+                      aria-controls={openAccountOptions ? 'account-menu' : undefined}
+                      aria-haspopup="true"
+                      aria-expanded={openAccountOptions ? 'true' : undefined}
+                      className="ml-1 text-gray-900 group-hover:text-white"
+                    />
+                  )}
+                  <SwitchAccountMenu
+                    open={openAccountOptions}
+                    handleClose={handleClose}
+                    anchorEl={anchorElAccountOptions}
+                  />
+                </div>
+
+                {hasAnyPermission(b2bUserActions.MANAGE_CART) && (
+                  <div className="hover:text-white transition-colors cursor-pointer relative">
+                    <CartIcon size={isHeaderSmall ? 'small' : 'medium'} />
+                  </div>
+                )}
+              </div>
+            </NoSsr>
+          </div>
+        </div>
       </Container>
-    </Box>
+    </div>
   )
 }
 

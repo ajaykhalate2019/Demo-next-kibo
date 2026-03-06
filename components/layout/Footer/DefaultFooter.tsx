@@ -16,9 +16,9 @@ const FooterItemLink = ({ link, text }: any) => {
 
 export default function DefaultFooter({ sections = [], social = [] }: any) {
   return (
-    <footer className="w-full mt-20 bg-[#1A1A1A] text-white">
+    <footer className="w-full mt-10 bg-[#1A1A1A] text-white">
 
-      <div className="max-w-7xl mx-auto px-6 lg:px-12 py-20">
+      <div className="max-w-8xl mx-auto py-14 px-14">
 
         {/* TOP GRID */}
         <div className="grid grid-cols-1 md:grid-cols-6 gap-10">
