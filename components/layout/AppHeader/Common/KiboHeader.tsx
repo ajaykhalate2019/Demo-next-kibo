@@ -166,7 +166,7 @@ const HeaderActionArea = (props: HeaderActionAreaProps) => {
                   <div className="relative hover:text-white transition-all cursor-pointer duration-300 hover:scale-110 hover:drop-shadow-lg">
                     <CartIcon size={isHeaderSmall ? 'small' : 'medium'} />
                     {/* cart glow */}
-                    <span className="absolute -top-1 -right-1 h-2 w-2 bg-red-500 rounded-full animate-ping"></span>
+                    <span className="absolute -top-1 -right-1 h-2 w-2 bg-red-500 rounded-full animate-ping ring-white/20"></span>
                   </div>
                 )}
               </div>

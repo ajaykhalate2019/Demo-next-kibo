@@ -17,14 +17,13 @@ const FooterItemLink = ({ link, text }: any) => {
 export default function DefaultFooter({ sections = [], social = [] }: any) {
   return (
     <footer className="relative w-full mt-10 bg-gradient-to-r from-[#6dd5ed] via-[#2ea195] to-[#2193b0] backdrop-blur-md text-white overflow-hidden shadow-2xl">
-      {/* Exact Pulse Effect from Header */}
-      <div className="absolute inset-0 opacity-20 bg-[radial-gradient(circle_at_20%_50%,white,transparent_40%)] animate-pulse"></div>
+     
+      {/* <div className="absolute inset-0 opacity-20 bg-[radial-gradient(circle_at_20%_50%,white,transparent_40%)] animate-pulse"></div> */}
 
-      {/* Additional decorative glows for depth */}
       <div className="absolute top-0 right-0 -mr-20 -mt-20 w-96 h-96 bg-white/10 rounded-full blur-[120px] pointer-events-none"></div>
       <div className="absolute bottom-0 left-0 -ml-20 -mb-20 w-96 h-96 bg-white/10 rounded-full blur-[120px] pointer-events-none"></div>
 
-      <div className="relative max-w-8xl mx-auto py-16 px-6 md:px-14">
+      <div className="relative max-w-screen-2xl mx-auto py-10 sm:py-12 md:py-16 px-4 sm:px-6">
         {/* TOP GRID */}
         <div className="grid grid-cols-1 md:grid-cols-6 gap-12 lg:gap-16">
           {/* NEWSLETTER */}
@@ -88,7 +87,7 @@ export default function DefaultFooter({ sections = [], social = [] }: any) {
                 key={index}
                 href={item.link}
                 target="_blank"
-                className="group relative flex h-10 w-10 items-center justify-center rounded-full bg-white/5 border border-white/10 hover:border-cyan-400/50 transition-all duration-500 overflow-hidden"
+                className="group relative flex h-12 w-12 items-center justify-center rounded-full bg-white/5 border border-white/10 hover:border-cyan-400/50 transition-all duration-500 overflow-hidden"
               >
                 <div className="absolute inset-0 bg-gradient-to-tr from-[#2ea195] to-[#2193b0] opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                 <img

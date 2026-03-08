@@ -57,7 +57,7 @@ const Title = ({ heading }: { heading: string }) => {
 
   return (
     <div className="px-5 py-3 first:pt-4">
-      <h5 className="text-[10px] font-black uppercase tracking-[0.25em] bg-gradient-to-r from-cyan-400 to-teal-400 bg-clip-text text-transparent">
+      <h5 className="text-[10px] font-black uppercase tracking-[0.25em] text-black/40">
         {t(heading)}
       </h5>
     </div>
@@ -76,7 +76,7 @@ const Content = (props: ListItemProps) => {
       >
         <div className="absolute left-0 w-1 h-0 bg-gradient-to-b from-cyan-400 to-teal-400 transition-all duration-300 group-hover:h-6" />
         <div className="flex-1">
-          <p className="text-sm text-gray-200 group-hover:text-cyan-400 group-hover:pl-2 transition-all duration-300 font-medium">
+          <p className="text-sm text-black group-hover:text-cyan-400 group-hover:pl-2 transition-all duration-300 font-medium">
             {name}
           </p>
         </div>
