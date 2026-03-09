@@ -136,7 +136,7 @@ const HeaderActionArea = (props: HeaderActionAreaProps) => {
                 )} */}
                 {/* Account */}
                 <div className="inline-flex items-center hover:text-white transition-all cursor-pointer duration-300 hover:scale-110 hover:drop-shadow-lg">
-                  {/* <AccountIcon
+                  <AccountIcon
                     size={isHeaderSmall ? 'small' : 'medium'}
                     onAccountIconClick={onAccountIconClick}
                     data-testid="Account-Icon"
@@ -144,8 +144,8 @@ const HeaderActionArea = (props: HeaderActionAreaProps) => {
                     isCSR={Boolean(isCSR)}
                     customerName={customerName}
                     companyOrOrganization={user?.companyOrOrganization as string}
-                  /> */}
-                  {/* {selectedAccountId && accountsByUser && accountsByUser?.length > 1 && (
+                  />
+                  {selectedAccountId && accountsByUser && accountsByUser?.length > 1 && (
                     <KeyboardArrowDownOutlined
                       onClick={handleAccountOptionsClick}
                       aria-controls={openAccountOptions ? 'account-menu' : undefined}
@@ -153,7 +153,7 @@ const HeaderActionArea = (props: HeaderActionAreaProps) => {
                       aria-expanded={openAccountOptions ? 'true' : undefined}
                       className="ml-1 text-gray-900 transition-transform duration-300 hover:rotate-180"
                     />
-                  )} */}
+                  )}
                   <SwitchAccountMenu
                     open={openAccountOptions}
                     handleClose={handleClose}

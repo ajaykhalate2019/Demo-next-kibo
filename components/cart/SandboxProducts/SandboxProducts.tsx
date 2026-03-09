@@ -132,7 +132,8 @@ const ProductCard = ({ product, index }: { product: Product, index: number }) =>
         </h3>
 
         <p className="text-xs text-gray-500 line-clamp-2 mb-3 leading-relaxed font-medium">
-          {fullDescription.replace(/<[^>]*>?/gm, '')}
+          {/* {fullDescription.replace(/<[^>]*>?/gm, '')} */}
+          {fullDescription}
         </p>
 
         {/* Price Area */}
@@ -185,7 +186,7 @@ const ProductCard = ({ product, index }: { product: Product, index: number }) =>
 
 const SandboxProducts = () => {
   const scrollRef = useRef<HTMLDivElement | null>(null)
-  const { data, isLoading, isError } = useGetSandboxProducts({ pageSize: 100 })
+  const { data, isLoading, isError } = useGetSandboxProducts({ pageSize: 10 })
 
   const scroll = (direction: 'left' | 'right') => {
     if (!scrollRef.current) return
@@ -224,7 +225,7 @@ const SandboxProducts = () => {
       <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-cyan-100/30 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/2" />
       <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-teal-100/30 rounded-full blur-[120px] translate-y-1/2 -translate-x-1/2" />
 
-      <div className="container relative mx-auto px-4 max-w-[1600px]">
+      <div className="container relative mx-auto px-2 max-w-[1600px]">
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10 md:mb-14">
           <div className="max-w-xl">
             <h2 className="text-4xl md:text-6xl font-black text-gray-900 tracking-tight leading-tight mb-6">

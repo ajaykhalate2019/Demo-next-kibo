@@ -87,13 +87,13 @@ export default function DefaultFooter({ sections = [], social = [] }: any) {
                 key={index}
                 href={item.link}
                 target="_blank"
-                className="group relative flex h-12 w-12 items-center justify-center rounded-full bg-white/5 border border-white/10 hover:border-cyan-400/50 transition-all duration-500 overflow-hidden"
+                className="group relative flex h-10 w-10 items-center justify-center rounded-full bg-white/5 border border-white/10 hover:border-cyan-400/50 transition-all duration-500 overflow-hidden"
               >
                 <div className="absolute inset-0 bg-gradient-to-tr from-[#2ea195] to-[#2193b0] opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                 <img
                   src={item.iconPath}
                   alt="social"
-                  className="relative h-4 w-4 transition-all duration-300 group-hover:scale-110 group-hover:brightness-200"
+                  className="relative h-6 w-6 transition-all duration-300 group-hover:scale-110 group-hover:brightness-200"
                 />
               </a>
             ))}
