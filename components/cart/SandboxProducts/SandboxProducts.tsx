@@ -159,7 +159,8 @@ const ProductCard = ({ product, index }: { product: Product, index: number }) =>
 
           <button
             onClick={handleAddToCartClick}
-            disabled={!product.purchasableState?.isPurchasable || !inventory?.onlineStockAvailable || isATCLoading}
+            // disabled={!product.purchasableState?.isPurchasable || !inventory?.onlineStockAvailable || isATCLoading}
+            disabled={isATCLoading}
             className="group relative flex items-center justify-center gap-2 px-4 py-3 text-xs font-bold uppercase tracking-widest text-white rounded-xl bg-gradient-to-r from-[#2ea195] to-[#2193b0] shadow-lg shadow-[#2ea195]/20 transition-all duration-300 hover:shadow-[#2ea195]/40 hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 disabled:grayscale disabled:scale-100 overflow-hidden"
           >
             <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-500" />
@@ -170,7 +171,8 @@ const ProductCard = ({ product, index }: { product: Product, index: number }) =>
               <>
                 <ShoppingBag className="w-4 h-4" />
                 <span className="relative z-10">
-                  {inventory?.onlineStockAvailable ? 'Add' : 'Stock'}
+                  {/* {inventory?.onlineStockAvailable ? 'Add' : 'Stock'} */}
+                  Add
                 </span>
               </>
             )}
@@ -223,7 +225,6 @@ const SandboxProducts = () => {
       <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-teal-100/30 rounded-full blur-[120px] translate-y-1/2 -translate-x-1/2" />
 
       <div className="container relative mx-auto px-4 max-w-[1600px]">
-        {/* Header Section */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10 md:mb-14">
           <div className="max-w-xl">
             <h2 className="text-4xl md:text-6xl font-black text-gray-900 tracking-tight leading-tight mb-6">

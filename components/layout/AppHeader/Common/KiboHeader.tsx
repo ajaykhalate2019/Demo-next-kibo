@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-import { KeyboardArrowDownOutlined } from '@mui/icons-material'
+import { KeyboardArrowDownOutlined, FavoriteBorderOutlined } from '@mui/icons-material'
 import {
   Collapse,
   Box,
@@ -113,17 +113,17 @@ const HeaderActionArea = (props: HeaderActionAreaProps) => {
           <div className="flex flex-shrink-0 items-center gap-3 md:gap-5 text-gray-900">
             <NoSsr>
               <div className="flex items-center gap-3 md:gap-5">
-                {!isCSR && (
-                  <>
-                    {/* Store Icon */}
-                    <div className="cursor-pointer hover:text-white transition-all duration-300 hover:scale-110 hover:drop-shadow-lg">
+                {/* {!isCSR && (
+                  <> */}
+                {/* Store Icon */}
+                {/* <div className="cursor-pointer hover:text-white transition-all duration-300 hover:scale-110 hover:drop-shadow-lg">
                       <StoreFinderIcon
                         size={isHeaderSmall ? 'small' : 'medium'}
                         data-testid="Store-FinderIcon"
                       />
-                    </div>
-                    {/* Account Request */}
-                    <div className="hover:text-white transition-all duration-300 hover:text-white hover:scale-110 hover:drop-shadow-lg cursor-pointer">
+                    </div> */}
+                {/* Account Request */}
+                {/* <div className="hover:text-white transition-all duration-300 hover:text-white hover:scale-110 hover:drop-shadow-lg cursor-pointer">
                       <AccountRequestIcon
                         onClick={onAccountRequestClick}
                         isElementVisible={false}
@@ -133,10 +133,10 @@ const HeaderActionArea = (props: HeaderActionAreaProps) => {
                       />
                     </div>
                   </>
-                )}
+                )} */}
                 {/* Account */}
                 <div className="inline-flex items-center hover:text-white transition-all cursor-pointer duration-300 hover:scale-110 hover:drop-shadow-lg">
-                  <AccountIcon
+                  {/* <AccountIcon
                     size={isHeaderSmall ? 'small' : 'medium'}
                     onAccountIconClick={onAccountIconClick}
                     data-testid="Account-Icon"
@@ -144,8 +144,8 @@ const HeaderActionArea = (props: HeaderActionAreaProps) => {
                     isCSR={Boolean(isCSR)}
                     customerName={customerName}
                     companyOrOrganization={user?.companyOrOrganization as string}
-                  />
-                  {selectedAccountId && accountsByUser && accountsByUser?.length > 1 && (
+                  /> */}
+                  {/* {selectedAccountId && accountsByUser && accountsByUser?.length > 1 && (
                     <KeyboardArrowDownOutlined
                       onClick={handleAccountOptionsClick}
                       aria-controls={openAccountOptions ? 'account-menu' : undefined}
@@ -153,13 +153,20 @@ const HeaderActionArea = (props: HeaderActionAreaProps) => {
                       aria-expanded={openAccountOptions ? 'true' : undefined}
                       className="ml-1 text-gray-900 transition-transform duration-300 hover:rotate-180"
                     />
-                  )}
+                  )} */}
                   <SwitchAccountMenu
                     open={openAccountOptions}
                     handleClose={handleClose}
                     anchorEl={anchorElAccountOptions}
                   />
                 </div>
+
+                {/* Wishlist */}
+                <Link href="/wishlist" passHref>
+                  <div className="relative hover:text-white transition-all cursor-pointer duration-300 hover:scale-110 hover:drop-shadow-lg">
+                    <FavoriteBorderOutlined fontSize={isHeaderSmall ? 'small' : 'medium'} />
+                  </div>
+                </Link>
 
                 {/* Cart */}
                 {hasAnyPermission(b2bUserActions.MANAGE_CART) && (
@@ -316,7 +323,7 @@ const KiboHeader = (props: KiboHeaderProps) => {
       >
         <Backdrop open={isBackdropOpen} data-testid="backdrop" />
 
-        <TopHeader navLinks={navLinks} />
+        {/* <TopHeader navLinks={navLinks} /> */}
 
         <Box component={'section'} sx={{ ...kiboHeaderStyles.topBarStyles }}>
           {getSection()}
