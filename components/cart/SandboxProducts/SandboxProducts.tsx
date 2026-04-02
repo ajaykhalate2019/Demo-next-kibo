@@ -1,4 +1,5 @@
 import React, { useRef } from 'react'
+import Link from 'next/link'
 import { useRouter } from 'next/router'
 import Image from 'next/image'
 import {
@@ -16,6 +17,7 @@ import { FulfillmentOptions as FulfillmentOptionsConstant } from '@/lib/constant
 import type { Product } from '@/lib/gql/types'
 import { useGetSandboxProducts, useProductCardActions } from '@/hooks'
 
+
 const CarouselButton = ({
   onClick,
   direction
@@ -27,11 +29,11 @@ const CarouselButton = ({
     onClick={onClick}
     className="group relative flex h-12 w-12 items-center justify-center rounded-full bg-white/10 backdrop-blur-md border border-white/20 shadow-xl transition-all duration-300 hover:bg-white/20 hover:scale-110 active:scale-95 overflow-hidden"
   >
-    <div className="absolute inset-0 bg-gradient-to-tr from-[#2ea195]/20 to-[#2193b0]/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+    <div className="absolute inset-0 bg-neutral-800/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
     {direction === 'left' ? (
-      <ChevronLeft className="w-6 h-6 text-black group-hover:text-cyan-400 transition-colors" />
+      <ChevronLeft className="w-6 h-6 text-black group-hover:text-neutral-600 transition-colors" />
     ) : (
-      <ChevronRight className="w-6 h-6 text-black group-hover:text-cyan-400 transition-colors" />
+      <ChevronRight className="w-6 h-6 text-black group-hover:text-neutral-600 transition-colors" />
     )}
   </button>
 )
@@ -46,9 +48,8 @@ const ProductCard = ({ product, index }: { product: Product, index: number }) =>
   const imageUrl = productGetters.handleProtocolRelativeUrl(
     productGetters.getCoverImage(product)
   )
-  const fullDescription = product.content?.productFullDescription || ''
-  const price = productGetters.getPrice(product) || { regular: '', special: '' }
-  const inventory = product.inventoryInfo
+  const fullDescription = productGetters.getDescription(product)
+  const price = productGetters.getPrice(product)
   const categories = product.categories || []
   const isOnSale = price.special && price.special !== price.regular
   const productCode = productGetters.getProductId(product)
@@ -121,18 +122,17 @@ const ProductCard = ({ product, index }: { product: Product, index: number }) =>
       <div className="flex flex-col flex-1 p-4">
         <div className="mb-2">
           {categories?.[0] && (
-            <span className="text-[10px] font-black uppercase tracking-[0.2em] text-[#2ea195]">
+            <span className="text-[10px] font-black uppercase tracking-[0.2em] text-neutral-500">
               {categories[0]?.content?.name}
             </span>
           )}
         </div>
 
-        <h3 className="text-lg font-bold text-gray-900 line-clamp-1 mb-1 group-hover:text-[#2ea195] transition-colors">
+        <h3 className="text-lg font-bold text-gray-900 line-clamp-1 mb-1 group-hover:text-neutral-700 transition-colors">
           {name}
         </h3>
 
         <p className="text-xs text-gray-500 line-clamp-2 mb-3 leading-relaxed font-medium">
-          {/* {fullDescription.replace(/<[^>]*>?/gm, '')} */}
           {fullDescription}
         </p>
 
@@ -150,21 +150,20 @@ const ProductCard = ({ product, index }: { product: Product, index: number }) =>
 
         {/* Action Buttons */}
         <div className="mt-auto grid grid-cols-2 gap-3">
-          <button
-            onClick={() => router.push(link)}
+          <Link
+            href={link}
             className="flex items-center justify-center gap-2 px-4 py-3 text-xs font-bold uppercase tracking-widest border border-gray-200 rounded-xl transition-all duration-300 hover:bg-gray-50 hover:border-gray-900 active:scale-[0.98]"
           >
             View
             <ArrowRight className="w-3 h-3" />
-          </button>
+          </Link>
 
           <button
             onClick={handleAddToCartClick}
-            // disabled={!product.purchasableState?.isPurchasable || !inventory?.onlineStockAvailable || isATCLoading}
             disabled={isATCLoading}
-            className="group relative flex items-center justify-center gap-2 px-4 py-3 text-xs font-bold uppercase tracking-widest text-white rounded-xl bg-gradient-to-r from-[#2ea195] to-[#2193b0] shadow-lg shadow-[#2ea195]/20 transition-all duration-300 hover:shadow-[#2ea195]/40 hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 disabled:grayscale disabled:scale-100 overflow-hidden"
+            className="group relative flex items-center justify-center gap-2 px-4 py-3 text-xs font-bold uppercase tracking-widest text-white rounded-xl bg-neutral-900 shadow-lg shadow-black/10 transition-all duration-300 hover:bg-black hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 disabled:grayscale disabled:scale-100 overflow-hidden"
           >
-            <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-500" />
+            <div className="absolute inset-0 bg-white/10 translate-y-full group-hover:translate-y-0 transition-transform duration-500" />
 
             {isATCLoading ? (
               <Loader2 className="w-4 h-4 animate-spin" />
@@ -172,7 +171,6 @@ const ProductCard = ({ product, index }: { product: Product, index: number }) =>
               <>
                 <ShoppingBag className="w-4 h-4" />
                 <span className="relative z-10">
-                  {/* {inventory?.onlineStockAvailable ? 'Add' : 'Stock'} */}
                   Add
                 </span>
               </>
@@ -186,7 +184,8 @@ const ProductCard = ({ product, index }: { product: Product, index: number }) =>
 
 const SandboxProducts = () => {
   const scrollRef = useRef<HTMLDivElement | null>(null)
-  const { data, isLoading, isError } = useGetSandboxProducts({ pageSize: 10 })
+  const { data, isLoading, isError } = useGetSandboxProducts({ pageSize: 100 })
+
 
   const scroll = (direction: 'left' | 'right') => {
     if (!scrollRef.current) return
@@ -201,7 +200,7 @@ const SandboxProducts = () => {
   if (isLoading) {
     return (
       <div className="flex flex-col items-center justify-center min-h-[40vh] gap-4">
-        <Loader2 className="w-10 h-10 text-[#2ea195] animate-spin" />
+        <Loader2 className="w-10 h-10 text-neutral-800 animate-spin" />
         <p className="text-sm font-black uppercase tracking-[0.3em] text-gray-400">Loading Products...</p>
       </div>
     )
@@ -221,15 +220,14 @@ const SandboxProducts = () => {
 
   return (
     <section className="relative py-8 md:py-14 bg-gray-50/50 overflow-hidden">
-      {/* Decorative Elements */}
-      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-cyan-100/30 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/2" />
-      <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-teal-100/30 rounded-full blur-[120px] translate-y-1/2 -translate-x-1/2" />
+      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-neutral-200/20 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/2" />
+      <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-neutral-300/20 rounded-full blur-[120px] translate-y-1/2 -translate-x-1/2" />
 
       <div className="container relative mx-auto px-2 max-w-[1600px]">
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10 md:mb-14">
           <div className="max-w-xl">
             <h2 className="text-4xl md:text-6xl font-black text-gray-900 tracking-tight leading-tight mb-6">
-              All <span className="text-[#2ea195]">Products.</span>
+              All <span className="text-neutral-400">Products.</span>
             </h2>
             <p className="text-lg text-gray-500 font-medium leading-relaxed">
               Showing all available products.
@@ -241,9 +239,9 @@ const SandboxProducts = () => {
               <CarouselButton onClick={() => scroll('left')} direction="left" />
               <CarouselButton onClick={() => scroll('right')} direction="right" />
             </div>
-            <div className="px-6 py-2 rounded-full shadow-sm border border-gray-100 text-xs font-bold text-gray-800 bg-[#2ea195]">
-              <span className="text-white font-black">{products.length}</span> Products
-            </div>
+            {/* <div className="px-6 py-2 rounded-full shadow-sm border border-gray-100 text-xs font-bold text-white bg-gray-500">
+              <span className="text-white font-white">{products.length}</span> Products
+            </div> */}
           </div>
         </div>
 
@@ -258,7 +256,6 @@ const SandboxProducts = () => {
             </div>
           ))}
         </div>
-
       </div>
     </section>
   )

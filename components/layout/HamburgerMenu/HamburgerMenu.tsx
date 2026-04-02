@@ -38,27 +38,27 @@ interface HamburgerMenuProps {
 
 const styles = {
   container: {
-    width: '80vw',
+    width: { xs: '85vw', sm: '350px' },
     position: 'relative',
-    height: '-webkit-fill-available',
+    height: '100%',
     overflowY: 'hidden',
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'flex-start',
+    backgroundColor: '#121212',
+    color: 'white',
+    boxShadow: '4px 0 24px rgba(0,0,0,0.5)',
   },
   menuList: {
     overflowY: 'auto',
     width: '100%',
-  },
-  spacer: {
-    backgroundColor: 'grey.300',
-    height: 19,
-  },
-  navLinksList: {
-    width: '100%',
-    maxHeight: '40%',
-    overflowY: 'auto',
-    pt: 0,
+    '&::-webkit-scrollbar': {
+      width: '5px',
+    },
+    '&::-webkit-scrollbar-track': {
+      backgroundColor: 'transparent',
+    },
+
   },
 }
 
@@ -139,12 +139,22 @@ const HamburgerMenu = (props: HamburgerMenuProps) => {
                 display={'flex'}
                 justifyContent={'space-between'}
                 alignItems={'center'}
+                sx={{
+                  padding: '8px 16px',
+                  backgroundColor: 'rgba(158, 151, 151, 0.03)',
+                  borderBottom: '1px solid rgba(126, 123, 123, 0.08)',
+                  backdropFilter: 'blur(10px)',
+                  transition: 'background-color 0.2s',
+                  '&:hover': {
+                    backgroundColor: 'rgba(158, 151, 151, 0.06)',
+                  }
+                }}
               >
                 <HeaderAction
                   title={userName ? `${t('hi')}, ${userName}` : t('my-account')}
                   subtitle={getSubtitle()}
                   icon={AccountCircle}
-                  mobileIconColor="black"
+                  mobileIconColor="white"
                   iconFontSize="large"
                   showTitleInMobile={true}
                   onClick={onAccountIconClick}
@@ -160,7 +170,7 @@ const HamburgerMenu = (props: HamburgerMenuProps) => {
                       aria-haspopup="true"
                       aria-expanded={openAccountOptions ? 'true' : undefined}
                       sx={{
-                        color: 'grey.900',
+                        color: 'white',
                       }}
                     />
                   }
@@ -173,28 +183,6 @@ const HamburgerMenu = (props: HamburgerMenuProps) => {
               </Box>
             </CategoryNestedNavigation>
           </Box>
-          <Box sx={{ ...styles.spacer }}></Box>
-          <List sx={{ ...styles.navLinksList }}>
-            {!isCSR &&
-              navLinks?.map((nav) => (
-                <Box key={nav.text}>
-                  <MuiLink underline="none">
-                    <ListItem button sx={{ paddingInline: 4 }}>
-                      <ListItemText
-                        primary={
-                          <Typography variant="body2" color="text.primary">
-                            {t(`${nav.text}`)}
-                          </Typography>
-                        }
-                        onClick={() => handleNavLinks(nav.link)}
-                      />
-                    </ListItem>
-                  </MuiLink>
-                  <Divider />
-                </Box>
-              ))}
-          </List>
-          {requestAccountIconComponent}
         </Box>
       </SwipeableDrawer>
     </>

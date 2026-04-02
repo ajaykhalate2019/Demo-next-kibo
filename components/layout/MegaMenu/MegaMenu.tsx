@@ -72,7 +72,8 @@ const style = {
   },
   popoverPaper: {
     width: '96.5vw',
-    height: '25rem',
+    height: 'auto',
+    maxHeight: '35rem',
     borderRadius: 0,
     boxShadow: 'none',
     borderTop: '1px solid',
@@ -154,7 +155,7 @@ const MegaMenuCategory = (props: MegaMenuCategoryProps) => {
                 )
               })}
             </Box>
-            <Divider orientation="vertical" sx={{ minHeight: '20rem', height: '20rem' }} />
+            {/* <Divider orientation="vertical" sx={{ minHeight: '20rem', height: '20rem' }} />
             <Box flex={1} px={4}>
               <Box width={'100%'}>
                 <Typography variant="subtitle2" pt={0.5} fontWeight="bold">
@@ -167,7 +168,7 @@ const MegaMenuCategory = (props: MegaMenuCategoryProps) => {
                   height={'100'}
                 />
               </Box>
-            </Box>
+            </Box> */}
           </Box>
         </HoverPopover>
       )}

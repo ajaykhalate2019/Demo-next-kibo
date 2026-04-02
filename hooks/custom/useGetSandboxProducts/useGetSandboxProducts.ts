@@ -42,7 +42,7 @@ const fetchSandboxProducts = async (params: UseSandboxProductsParams) => {
   return response?.products
 }
 
-export const useGetSandboxProducts = (
+export const  useGetSandboxProducts = (
   params: UseSandboxProductsParams
 ): UseSandboxProductsResult => {
   const { data, isLoading, isError } = useQuery({

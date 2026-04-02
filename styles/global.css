@@ -1,5 +1,6 @@
 @import "tailwindcss";
 
+@import "react-responsive-carousel/lib/styles/carousel.min.css";
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -11,7 +12,7 @@
 }
 
 #nprogress .bar {
-  background: #2ea195;
+  background: #6366f1;
 
   position: fixed;
   z-index: 2000;
@@ -29,7 +30,7 @@
   right: 0px;
   width: 100px;
   height: 100%;
-  box-shadow: 0 0 10px #2ea195, 0 0 5px #2ea195;
+  box-shadow: 0 0 10px #6366f1, 0 0 5px #6366f1;
   opacity: 1;
 
   -webkit-transform: rotate(3deg) translate(0px, -4px);
@@ -85,8 +86,8 @@ a {
   left: 0;
   right: 0;
   bottom: 0;
-  background: #c0e3df; /* primary.light */
-  border: 1px dashed #2ea195; /* primary.main */
+  background: #e0e7ff; /* indigo.light */
+  border: 1px dashed #6366f1; /* indigo.main */
   border-radius: 5px;
 }
 

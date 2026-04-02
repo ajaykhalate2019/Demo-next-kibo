@@ -19,12 +19,10 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
-
 import { kiboHeaderStyles, topHeaderStyles } from './KiboHeader.styles'
 import { AccountHierarchyFormDialog } from '@/components/dialogs'
 import {
   AccountIcon,
-  AccountRequestIcon,
   CartIcon,
   CheckoutHeader,
   HamburgerMenu,
@@ -32,11 +30,10 @@ import {
   MegaMenu,
   MobileHeader,
   SearchSuggestions,
-  StoreFinderIcon,
   SwitchAccountMenu,
 } from '@/components/layout'
 import { useAuthContext, useHeaderContext, useModalContext } from '@/context'
-import { useCreateCustomerB2bAccountMutation, useGetCategoryTree } from '@/hooks'
+import { useCreateCustomerB2bAccountMutation, useGetCategoryTree, useGetCart } from '@/hooks'
 import {
   b2bUserActions,
   buildCreateCustomerB2bAccountParams,
@@ -45,6 +42,9 @@ import {
 import type { CreateCustomerB2bAccountParams, NavigationLink } from '@/lib/types'
 import FC_Logos from '@/public/icons/clothLogo.jpg'
 import type { Maybe, PrCategory } from '@/lib/gql/types'
+import { useWishlist } from '@/hooks/custom/useWishlist/useWishlist'
+import { cartGetters } from '@/lib/getters'
+import { Heart, ShoppingBag } from 'lucide-react'
 
 interface KiboHeaderProps {
   navLinks: NavigationLink[]
@@ -75,6 +75,12 @@ const HeaderActionArea = (props: HeaderActionAreaProps) => {
 
   const { selectedAccountId, accountsByUser, user } = useAuthContext()
 
+  const { data: cart } = useGetCart()
+  const totalItems = cartGetters.getCartItemCount(cart)
+
+  const { wishlists } = useWishlist()
+  const totalWishlistItems = wishlists?.items?.length || 0
+
   const handleAccountOptionsClick = (event: any) => {
     setAnchorElAccountOptions(event.currentTarget)
   }
@@ -85,22 +91,22 @@ const HeaderActionArea = (props: HeaderActionAreaProps) => {
   const showSearchBarInLargeHeader = !isHeaderSmall || isSearchBarVisible
 
   return (
-    <div className="relative bg-gradient-to-r from-[#6dd5ed] via-[#2ea195] to-[#2193b0] backdrop-blur-md py-2 sm:py-3 md:py-4 shadow-xl" data-testid="header-action-area">
-      <div className="absolute inset-0 opacity-20 bg-[radial-gradient(circle_at_20%_50%,white,transparent_40%)] animate-pulse"></div>
+    <div className="relative bg-neutral-900 backdrop-blur-md py-2 sm:py-3 md:py-4 shadow-xl" data-testid="header-action-area">
+      <div className="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_20%_50%,#525252,transparent_40%)]"></div>
       <Container maxWidth="xl">
         <div className="relative flex items-center justify-between gap-3 sm:gap-4 md:gap-8">
-          {/* Logo Section */}
+          {/* Logo  */}
           <div className="flex-shrink-0 group">
             <Link href="/" className="flex items-center transition-all duration-300 transform hover:scale-110">
               <Image src={FC_Logos} alt="kibo-logo" height={50} width={100} className="object-contain drop-shadow-md" />
             </Link>
           </div>
 
-          {/* Search Bar Section - Centered */}
+          {/* Search Bar */}
           {showSearchBarInLargeHeader && (
             <div className="hidden md:flex flex-grow max-w-2xl px-2 lg:px-4 transition-all duration-500" data-testid="Search-container">
-              <div className="w-full bg-white/20 backdrop-blur-lg rounded-full border border-white/30 transition-all duration-300 
-                               hover:bg-white/30 focus-within:bg-white/40 shadow-md hover:shadow-xl">
+              <div className="w-full bg-white/10 backdrop-blur-lg rounded-full border border-white/20 transition-all duration-300 
+                               hover:bg-white/20 focus-within:bg-white/30 shadow-md hover:shadow-xl">
                 <SearchSuggestions
                   isViewSearchPortal={isMobileSearchPortalVisible}
                   onEnterSearch={() => toggleSearchBar(false)}
@@ -109,31 +115,10 @@ const HeaderActionArea = (props: HeaderActionAreaProps) => {
             </div>
           )}
 
-          {/* Icons/Actions Section */}
-          <div className="flex flex-shrink-0 items-center gap-3 md:gap-5 text-gray-900">
+          {/* Icons */}
+          <div className="flex flex-shrink-0 items-center gap-3 md:gap-5 text-white">
             <NoSsr>
               <div className="flex items-center gap-3 md:gap-5">
-                {/* {!isCSR && (
-                  <> */}
-                {/* Store Icon */}
-                {/* <div className="cursor-pointer hover:text-white transition-all duration-300 hover:scale-110 hover:drop-shadow-lg">
-                      <StoreFinderIcon
-                        size={isHeaderSmall ? 'small' : 'medium'}
-                        data-testid="Store-FinderIcon"
-                      />
-                    </div> */}
-                {/* Account Request */}
-                {/* <div className="hover:text-white transition-all duration-300 hover:text-white hover:scale-110 hover:drop-shadow-lg cursor-pointer">
-                      <AccountRequestIcon
-                        onClick={onAccountRequestClick}
-                        isElementVisible={false}
-                        iconProps={{ fontSize: isHeaderSmall ? 'small' : 'medium' }}
-                        buttonText={t('b2b-account-request')}
-                        data-testid="Account-Request-Icon"
-                      />
-                    </div>
-                  </>
-                )} */}
                 {/* Account */}
                 <div className="inline-flex items-center hover:text-white transition-all cursor-pointer duration-300 hover:scale-110 hover:drop-shadow-lg">
                   <AccountIcon
@@ -151,7 +136,7 @@ const HeaderActionArea = (props: HeaderActionAreaProps) => {
                       aria-controls={openAccountOptions ? 'account-menu' : undefined}
                       aria-haspopup="true"
                       aria-expanded={openAccountOptions ? 'true' : undefined}
-                      className="ml-1 text-gray-900 transition-transform duration-300 hover:rotate-180"
+                      className="ml-1 text-white transition-transform duration-300 hover:rotate-180"
                     />
                   )}
                   <SwitchAccountMenu
@@ -162,19 +147,25 @@ const HeaderActionArea = (props: HeaderActionAreaProps) => {
                 </div>
 
                 {/* Wishlist */}
-                <Link href="/wishlist" passHref>
-                  <div className="relative hover:text-white transition-all cursor-pointer duration-300 hover:scale-110 hover:drop-shadow-lg">
-                    <FavoriteBorderOutlined fontSize={isHeaderSmall ? 'small' : 'medium'} />
-                  </div>
+                <Link href="/wishlist" className="relative p-2 hover:bg-zinc-100 dark:hover:bg-zinc-800 rounded-full transition-colors text-zinc-600 hover:text-zinc-900 dark:text-zinc-300 dark:hover:text-white group">
+                  <Heart className="h-5 w-5 transition-transform group-hover:scale-110" />
+                  {totalWishlistItems > 0 && (
+                    <span className="absolute -top-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full bg-red-500 text-[10px] font-bold text-white shadow-lg ring-2 ring-white animate-in zoom-in">
+                      {totalWishlistItems}
+                    </span>
+                  )}
                 </Link>
 
                 {/* Cart */}
                 {hasAnyPermission(b2bUserActions.MANAGE_CART) && (
-                  <div className="relative hover:text-white transition-all cursor-pointer duration-300 hover:scale-110 hover:drop-shadow-lg">
-                    <CartIcon size={isHeaderSmall ? 'small' : 'medium'} />
-                    {/* cart glow */}
-                    <span className="absolute -top-1 -right-1 h-2 w-2 bg-red-500 rounded-full animate-ping ring-white/20"></span>
-                  </div>
+                  <Link href="/cart" className="relative p-2 hover:bg-zinc-100 dark:hover:bg-zinc-800 rounded-full transition-colors text-zinc-600 hover:text-zinc-900 dark:text-zinc-300 dark:hover:text-white group">
+                    <ShoppingBag className="h-5 w-5 transition-transform group-hover:scale-110" />
+                    {totalItems > 0 && (
+                      <span className="absolute -top-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full bg-gray-500 text-[10px] font-bold text-white shadow-lg ring-2 ring-white animate-in zoom-in">
+                        {totalItems}
+                      </span>
+                    )}
+                  </Link>
                 )}
               </div>
             </NoSsr>

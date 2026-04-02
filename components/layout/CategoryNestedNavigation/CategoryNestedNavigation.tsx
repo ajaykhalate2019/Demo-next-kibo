@@ -34,7 +34,7 @@ const styles = {
     marginLeft: 'auto',
   },
   smallIcon: {
-    fontSize: (theme: Theme) => theme.typography.body2,
+    fontSize: (theme: Theme) => theme.typography.body2, color: 'white'
   },
   listHeader: { paddingLeft: 4, paddingRight: 4, paddingTop: 1.5, paddingBottom: 1.5 },
   listContent: {
@@ -109,37 +109,37 @@ const CategoryNestedNavigation = (props: CategoryNestedNavigationProps) => {
 
   return (
     <List
-      sx={{ width: '100%', bgcolor: 'background.paper', pb: 0 }}
+      className="w-full pb-0 bg-transparent text-white"
       aria-labelledby="category-nested-list"
       role="list"
       subheader={
-        <Box display="flex" alignItems="center" pl={3} pr={2} pt={'4px'}>
-          <IconButton size="small" aria-label="back-arrow-button" onClick={handleBackClick}>
+        <Box display="flex" alignItems="center" pl={3} pr={2} pt={'4px'} className="text-white bg-transparent">
+          <IconButton size="small" aria-label="back-arrow-button" onClick={handleBackClick} className="text-white">
             <ArrowBackIos sx={{ ...styles.smallIcon }} />
           </IconButton>
-          <ListSubheader component="div" sx={{ flex: 1, paddingX: 1 }}>
+          <ListSubheader component="div" className="flex-1 px-2 text-white bg-transparent font-bold">
             {subHeader.backLink}
           </ListSubheader>
           <IconButton
             size="small"
-            aria-label="close-button"
-            sx={{ marginRight: 1 }}
+            aria-label="close-button" 
+            className="mr-2 text-white"
             onClick={() => onCloseMenu(false)}
           >
-            <Close />
+            <Close sx={{ ...styles.smallIcon }} />
           </IconButton>
         </Box>
       }
     >
       {children && subHeader.label === initialSubHeader.label && (
-        <ListItemButton sx={{ backgroundColor: 'grey.300', paddingBlock: '4px' }}>
-          <ListItemText primary={children} />
-        </ListItemButton>
+        <div className="w-full">
+          {children}
+        </div>
       )}
-      <ListItem sx={styles.listHeader}>
-        <ListItemText primary={<Typography variant="h2">{subHeader.label}</Typography>} />
+      <ListItem className="px-4 py-3">
+        <Typography variant="h6" className="font-bold text-white/90">{subHeader.label}</Typography>
       </ListItem>
-      <Divider />
+      <Divider className="border-white/10" />
       {activeCategory?.map((category: Maybe<PrCategory>) => {
         return (
           <Slide
@@ -149,10 +149,9 @@ const CategoryNestedNavigation = (props: CategoryNestedNavigationProps) => {
             appear={true}
           >
             <Box>
-              <ListItemButton sx={{ paddingInline: 4 }}>
+              <ListItemButton className="px-4 hover:bg-white/5 transition-colors">
                 <ListItemText
-                  primary={category?.content?.name}
-                  sx={{ ...styles.listContent }}
+                  primary={<span className="text-white/80 font-medium">{category?.content?.name}</span>}
                   onClick={() =>
                     onCategoryClick(
                       category?.categoryCode as string,
@@ -161,10 +160,10 @@ const CategoryNestedNavigation = (props: CategoryNestedNavigationProps) => {
                   }
                 />
                 {category?.childrenCategories?.length ? (
-                  <ArrowForward fontSize="small" onClick={() => handleCategoryClick(category)} />
+                  <ArrowForward fontSize="small" className="text-white/60" onClick={() => handleCategoryClick(category)} />
                 ) : null}
               </ListItemButton>
-              <Divider />
+              <Divider className="border-white/5" />
             </Box>
           </Slide>
         )

@@ -64,7 +64,7 @@ const HeaderAction = (props: HeaderActionProps) => {
             <Icon
               fontSize={iconFontSize}
               sx={(theme: Theme) => ({
-                color: 'grey.900',
+                color: 'white',
                 [theme.breakpoints.down('md')]: {
                   color: mobileIconColor,
                 },
@@ -86,7 +86,7 @@ const HeaderAction = (props: HeaderActionProps) => {
             <Icon
               fontSize={iconFontSize}
               sx={(theme: Theme) => ({
-                color: 'grey.900',
+                color: 'white',
                 [theme.breakpoints.down('md')]: {
                   color: mobileIconColor,
                 },
@@ -106,7 +106,7 @@ const HeaderAction = (props: HeaderActionProps) => {
               variant="body2"
               component="span"
               fontWeight="bold"
-              color="text.primary"
+              color="white"
               sx={isCSR ? { display: 'block' } : { display: 'block', ...styles.hoverOver }}
             >
               {title}
@@ -114,7 +114,7 @@ const HeaderAction = (props: HeaderActionProps) => {
             <Typography
               variant="body2"
               component="span"
-              color="text.primary"
+              color="white"
               sx={{
                 display: 'block',
                 whiteSpace: 'nowrap',
